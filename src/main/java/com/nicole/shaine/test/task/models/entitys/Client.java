@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -25,9 +26,9 @@ public class Client {
         name = "client_generator",
         strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
         parameters = {
-            @org.hibernate.annotations.Parameter(name = "sequence_name", value = "client_sequence"),
-            @org.hibernate.annotations.Parameter(name = "initial_value", value = "10"),
-            @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
+            @Parameter(name = "sequence_name", value = "client_sequence"),
+            @Parameter(name = "initial_value", value = "10"),
+            @Parameter(name = "increment_size", value = "1")
         }
     )
     @Column(name = "client_id", nullable = false)
