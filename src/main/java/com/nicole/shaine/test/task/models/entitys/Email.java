@@ -34,9 +34,6 @@ public class Email {
     @Column(name = "email_id", nullable = false)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-
     @Column(name = "email_address", nullable = false, unique = true)
     private String address;
 
