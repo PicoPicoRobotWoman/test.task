@@ -41,10 +41,10 @@ public class Client {
     @Column(name = "gender", nullable = false)
     private Gender gender = Gender.UNKNOWN;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Email> emails = Collections.emptySet();
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Phone> phones = Collections.emptySet();
 
     @PrePersist

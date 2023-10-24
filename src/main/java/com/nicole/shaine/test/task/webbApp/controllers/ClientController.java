@@ -1,12 +1,12 @@
 package com.nicole.shaine.test.task.webbApp.controllers;
 
 import com.nicole.shaine.test.task.corverter.ClientMapper;
+import com.nicole.shaine.test.task.models.Exceptions.impl.ClientNonExistException;
 import com.nicole.shaine.test.task.models.Exceptions.impl.EmailExistException;
 import com.nicole.shaine.test.task.models.Exceptions.impl.PhoneExistException;
 import com.nicole.shaine.test.task.models.dto.request.ClientRequestDto;
 import com.nicole.shaine.test.task.models.dto.response.ClientResponseDto;
 
-import com.nicole.shaine.test.task.models.enums.Gender;
 import com.nicole.shaine.test.task.service.abs.ClientService;
 import com.nicole.shaine.test.task.service.abs.EmailService;
 import com.nicole.shaine.test.task.service.abs.PhoneService;
@@ -46,6 +46,18 @@ public class ClientController {
     public Set<ClientResponseDto> getClients() {
 
         return clientService.getAll().stream().map(clientMapper::entityToDto).collect(Collectors.toSet());
+
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ClientResponseDto getClient(@PathVariable(value = "id") Long id) {
+
+        if(!clientService.isExistById(id)) {
+            throw new ClientNonExistException(String.format("не существует пользователя с id: %s!", id));
+        }
+
+        return clientMapper.entityToDto(clientService.getById(id).get());
 
     }
 

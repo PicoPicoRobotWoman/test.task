@@ -1,6 +1,5 @@
 package com.nicole.shaine.test.task.models.entitys;
 
-import com.nicole.shaine.test.task.models.enums.Gender;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

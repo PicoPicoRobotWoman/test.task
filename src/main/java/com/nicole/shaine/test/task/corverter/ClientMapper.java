@@ -6,7 +6,6 @@ import com.nicole.shaine.test.task.models.entitys.Client;
 
 import com.nicole.shaine.test.task.models.entitys.Email;
 import com.nicole.shaine.test.task.models.entitys.Phone;
-import com.nicole.shaine.test.task.models.enums.Gender;
 import org.mapstruct.*;
 
 import java.util.Set;
