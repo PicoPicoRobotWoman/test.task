@@ -1,5 +1,6 @@
 package com.nicole.shaine.test.task.models.entitys;
 
+import com.nicole.shaine.test.task.models.enums.Gender;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,6 +37,9 @@ public class Client {
 
     @Column(name = "name")
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @OneToMany(mappedBy = "client")
     private List<Email> emails;
