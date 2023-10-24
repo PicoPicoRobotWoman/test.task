@@ -11,7 +11,8 @@ import java.util.List;
 public class ClientDaoImpl extends AbstractDaoImpl<Long, Client> implements ClientDao {
     @Override
     public List<Client> getAll() {
-        return entityManager.createQuery("SELECT client FROM Client client", Client.class)
+        String jpql = "SELECT client FROM Client client";
+        return entityManager.createQuery(jpql, Client.class)
             .getResultList();
     }
 

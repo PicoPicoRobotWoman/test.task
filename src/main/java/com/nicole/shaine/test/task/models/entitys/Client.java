@@ -38,13 +38,23 @@ public class Client {
     private String name;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "gender", nullable = false)
     private Gender gender = Gender.UNKNOWN;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private Set<Email> emails = Collections.emptySet();
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private Set<Phone> phones = Collections.emptySet();
+
+    @PrePersist
+    public void prePersist() {
+        if (gender == null) {
+            gender = Gender.UNKNOWN;
+        }
+        phones.forEach(phone -> phone.setClient(this));
+        emails.forEach(email -> email.setClient(this));
+    }
 
     @Override
     public boolean equals(Object o) {
