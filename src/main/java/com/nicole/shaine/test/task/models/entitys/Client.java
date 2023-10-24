@@ -10,8 +10,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -42,10 +42,10 @@ public class Client {
     private Gender gender;
 
     @OneToMany(mappedBy = "client")
-    private List<Email> emails;
+    private Set<Email> emails;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private List<Phone> phones;
+    private Set<Phone> phones;
 
     @Override
     public boolean equals(Object o) {
