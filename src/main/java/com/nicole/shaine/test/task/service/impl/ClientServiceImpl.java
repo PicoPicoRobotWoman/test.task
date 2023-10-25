@@ -1,6 +1,5 @@
 package com.nicole.shaine.test.task.service.impl;
 
-import com.nicole.shaine.test.task.dao.abs.AbstractDao;
 import com.nicole.shaine.test.task.dao.abs.ClientDao;
 import com.nicole.shaine.test.task.models.entitys.Client;
 import com.nicole.shaine.test.task.service.abs.AbstractServiceImpl;

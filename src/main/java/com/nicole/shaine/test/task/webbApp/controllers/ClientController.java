@@ -14,14 +14,11 @@ import com.nicole.shaine.test.task.models.dto.response.ContactResponseDto;
 import com.nicole.shaine.test.task.models.entitys.Contact;
 import com.nicole.shaine.test.task.models.enums.ContactType;
 import com.nicole.shaine.test.task.service.abs.ClientService;
-import com.nicole.shaine.test.task.service.abs.contactService;
+import com.nicole.shaine.test.task.service.abs.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -31,19 +28,19 @@ import java.util.stream.Stream;
 public class ClientController {
 
     private final ClientService clientService;
-    private final contactService contactService;
+    private final ContactService contactService;
 
     private final ClientMapper clientMapper;
     private final ContactMapper contactMapper;
 
     @Autowired
     public ClientController(ClientService clientService,
-                            contactService emailService,
+                            ContactService contactService,
                             ClientMapper clientMapper,
                             ContactMapper contactMapper) {
 
         this.clientService = clientService;
-        this.contactService = emailService;
+        this.contactService = contactService;
 
         this.clientMapper = clientMapper;
         this.contactMapper = contactMapper;

@@ -5,7 +5,7 @@ import com.nicole.shaine.test.task.models.enums.ContactType;
 
 import java.util.Set;
 
-public interface contactService extends AbstractService<Long, Contact> {
+public interface ContactService extends AbstractService<Long, Contact> {
 
     Boolean isExistByValues(Set<String> values);
     Set<Contact> getByClientIdAndContactType(Long id, ContactType contactType);

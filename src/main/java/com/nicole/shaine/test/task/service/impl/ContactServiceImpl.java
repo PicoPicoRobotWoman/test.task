@@ -4,7 +4,7 @@ import com.nicole.shaine.test.task.dao.abs.ContactDao;
 import com.nicole.shaine.test.task.models.entitys.Contact;
 import com.nicole.shaine.test.task.models.enums.ContactType;
 import com.nicole.shaine.test.task.service.abs.AbstractServiceImpl;
-import com.nicole.shaine.test.task.service.abs.contactService;
+import com.nicole.shaine.test.task.service.abs.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +15,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class contactServiceImpl extends AbstractServiceImpl<Long, Contact> implements contactService {
+public class ContactServiceImpl extends AbstractServiceImpl<Long, Contact> implements ContactService {
 
     private final ContactDao contactDao;
 
     @Autowired
-    public contactServiceImpl(ContactDao contactDao) {
+    public ContactServiceImpl(ContactDao contactDao) {
         super(contactDao);
         this.contactDao = contactDao;
     }
