@@ -15,6 +15,11 @@ import com.nicole.shaine.test.task.models.entitys.Contact;
 import com.nicole.shaine.test.task.models.enums.ContactType;
 import com.nicole.shaine.test.task.service.abs.ClientService;
 import com.nicole.shaine.test.task.service.abs.ContactService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +30,7 @@ import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/client")
+@Tag(name = "Клиенты", description = "Управление клиентами и их информацией")
 public class ClientController {
 
     private final ClientService clientService;
@@ -48,6 +54,13 @@ public class ClientController {
 
     @GetMapping("")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Получить список всех клиентов",
+        description = "Этот эндпоинт возвращает полный список клиентов из базы данных. "
+            + "Вы можете использовать этот эндпоинт для получения общей информации о клиентах.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Список клиентов успешно получен"),
+        @ApiResponse(responseCode = "500", description = "Ошибка сервера")
+    })
     public Set<ClientResponseDto> getClients() {
 
         return clientService.getAll().stream().map(clientMapper::entityToDto).collect(Collectors.toSet());
@@ -56,7 +69,15 @@ public class ClientController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ClientResponseDto getClient(@PathVariable(value = "id") Long id) {
+    @Operation(summary = "Получить информацию о клиенте по ID",
+        description = "Этот эндпоинт возвращает информацию о клиенте по указанному ID.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Успешно найден клиент"),
+        @ApiResponse(responseCode = "404", description = "Клиент с указанным ID не найден")
+    })
+    public ClientResponseDto getClient(
+        @Parameter(description = "Идентификатор клиента")
+        @PathVariable(value = "id") Long id) {
 
         if(!clientService.isExistById(id)) {
             throw new ClientNonExistException(String.format("не существует пользователя с id: %s!", id));
@@ -68,7 +89,16 @@ public class ClientController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createClient(@RequestBody ClientRequestDto clientRequestDto) {
+    @Operation(summary = "Создать нового клиента",
+        description = "Этот эндпоинт создает нового клиента на основе переданных данных.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Клиент успешно создан"),
+        @ApiResponse(responseCode = "400", description = "Некорректные данные запроса")
+    })
+    public void createClient(
+        @Parameter(description = "Данные нового клиента")
+        @RequestBody ClientRequestDto clientRequestDto
+    ) {
 
         clientService.create(clientMapper.DtoToCEntity(clientRequestDto));
 
@@ -76,8 +106,21 @@ public class ClientController {
 
     @PostMapping("/{id}/contact")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createClient(@PathVariable(value = "id") Long id,
-                             @RequestBody ContactRequestDto contactRequestDto) {
+    @Operation(
+        summary = "Создать контакт для клиента",
+        description = "Этот эндпоинт создает новый контакт для клиента с указанным ID."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Контакт успешно создан"),
+        @ApiResponse(responseCode = "400", description = "Некорректные данные запроса"),
+        @ApiResponse(responseCode = "404", description = "Клиент не найден"),
+        @ApiResponse(responseCode = "409", description = "Контакт уже существует")
+    })
+    public void createClient(
+        @Parameter(description = "ID клиента, для которого создается контакт")
+        @PathVariable(value = "id") Long id,
+        @Parameter(description = "Данные нового контакта")
+        @RequestBody ContactRequestDto contactRequestDto) {
 
         boolean isCorrectId = id == null || !clientService.isExistById(id);
         if (isCorrectId) {
@@ -100,8 +143,20 @@ public class ClientController {
 
     @GetMapping("/{id}/contact")
     @ResponseStatus(HttpStatus.OK)
-    public Set<ContactResponseDto> getContacts(@PathVariable(value = "id") Long id,
-                                               @RequestParam(name = "contactType", required = false) ContactType contactType) {
+    @Operation(
+        summary = "Получить контакты клиента",
+        description = "Этот эндпоинт возвращает контакты клиента с указанным ID. Можно фильтровать контакты по типу."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Список контактов успешно получен"),
+        @ApiResponse(responseCode = "400", description = "Некорректные данные запроса"),
+        @ApiResponse(responseCode = "404", description = "Клиент не найден")
+    })
+    public Set<ContactResponseDto> getContacts(
+        @Parameter(description = "ID клиента, для которого запрашиваются контакты")
+        @PathVariable(value = "id") Long id,
+        @Parameter(description = "Тип контакта для фильтрации")
+        @RequestParam(name = "contactType", required = false) ContactType contactType) {
 
         boolean isCorrectId = id == null || !clientService.isExistById(id);
         if (isCorrectId) {
