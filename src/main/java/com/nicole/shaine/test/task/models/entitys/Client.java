@@ -1,6 +1,5 @@
 package com.nicole.shaine.test.task.models.entitys;
 
-import com.nicole.shaine.test.task.models.enums.Gender;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,23 +36,12 @@ public class Client {
     @Column(name = "name")
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "gender", nullable = false)
-    private Gender gender = Gender.UNKNOWN;
-
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Email> emails = Collections.emptySet();
-
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Phone> phones = Collections.emptySet();
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Contact> contacts = Collections.emptySet();
 
     @PrePersist
     public void prePersist() {
-        if (gender == null) {
-            gender = Gender.UNKNOWN;
-        }
-        phones.forEach(phone -> phone.setClient(this));
-        emails.forEach(email -> email.setClient(this));
+        contacts.forEach(contact -> contact.setClient(this));
     }
 
     @Override

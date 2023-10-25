@@ -1,20 +1,18 @@
 package com.nicole.shaine.test.task.models.dto.response;
 
+import com.nicole.shaine.test.task.models.enums.ContactType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Set;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-public class ClientResponseDto {
+public class ContactResponseDto {
 
-    private Long id;
-    private String name;
-    private Set<ContactResponseDto> contacts;
+    private ContactType contactType;
+    private String value;
 
 }
