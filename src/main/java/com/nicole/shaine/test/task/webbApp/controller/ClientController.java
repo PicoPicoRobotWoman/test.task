@@ -1,4 +1,4 @@
-package com.nicole.shaine.test.task.webbApp.controllers;
+package com.nicole.shaine.test.task.webbApp.controller;
 
 import com.nicole.shaine.test.task.corverter.ClientMapper;
 import com.nicole.shaine.test.task.corverter.ContactMapper;
